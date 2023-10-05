@@ -1,0 +1,30 @@
+
+
+services:
+  init:
+    build: init
+    volumes:
+      - ${ENVIRONMENT_ROOT:?error}/:/root_env/
+
+  amavis:
+    build: amavis
+    restart: always
+    volumes:
+      - ${ENVIRONMENT_ROOT:?error}/amavis/quarantine/:/var/amavis/quarantine/
+    environment:
+      MYDOMAIN: ${MYDOMAIN:?error}
+      MAILSERVER_FQDN: ${MAILSERVER_FQDN:?error}
+    depends_on:
+      init:
+        condition: service_completed_successfully
+  database:
+    build: mariadb
+    restart: always
+    volumes:
+      - ${ENVIRONMENT_ROOT:?error}/mysql/data/:/var/lib/mysql/
+      - ${ENVIRONMENT_ROOT:?error}/mysql/secrets/:/run/secrets/
+    environment:
+      MARIADB_ROOT_PASSWORD_FILE: /run/secrets/mysql_root
+    depends_on:
+      init:
+        condition: service_completed_successfully
