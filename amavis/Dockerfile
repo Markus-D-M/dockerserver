@@ -12,7 +12,7 @@ RUN chmod 744 /etc/amavisd.conf
 
 RUN mkdir /run/clamav; chown clamav:clamav /run/clamav
 
-COPY spamassassing.conf /etc/mail/spamassassin/local.cf
+COPY spamassassing.conf /usr/share/spamassassin/local.cf
 
 RUN mkdir /etc/mail/razor; \
     razor-admin -home=/etc/mail/razor -register; \

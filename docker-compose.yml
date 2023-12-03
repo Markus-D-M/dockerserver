@@ -20,6 +20,8 @@ services:
   database:
     build: mariadb
     restart: always
+    ports:
+      - "3307:3306"
     volumes:
       - ${ENVIRONMENT_ROOT:?error}/mysql/data/:/var/lib/mysql/
       - ${ENVIRONMENT_ROOT:?error}/mysql/secrets/:/run/secrets/
@@ -28,3 +30,16 @@ services:
     depends_on:
       init:
         condition: service_completed_successfully
+  nextcloud:
+    image: nextcloud:fpm-alpine
+    restart: always
+    volumes:
+      - ${ENVIRONMENT_ROOT:?error}/nextcloud/data/:/var/www/html/
+      - ${ENVIRONMENT_ROOT:?error}/nextcloud/secrets/:/run/secrets/
+    environment:
+      MYSQL_HOST: "database"
+      MYSQL_PASSWORD_FILE: "/run/secrets/mysql_nextcloud_password"
+      MYSQL_DATABASE_FILE: "/run/secrets/mysql_nextcloud_database"
+      MYSQL_USER_FILE: "/run/secrets/mysql_nextcloud_user"
+    depends_on:
+      - database
