@@ -33,6 +33,8 @@ services:
   nextcloud:
     image: nextcloud:fpm-alpine
     restart: always
+    ports:
+      - "9001:9000"
     volumes:
       - ${ENVIRONMENT_ROOT:?error}/nextcloud/data/:/var/www/html/
       - ${ENVIRONMENT_ROOT:?error}/nextcloud/secrets/:/run/secrets/
