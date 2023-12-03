@@ -1,6 +1,7 @@
 create database if not exists mailserver;
+create database if not exists nextcloud;
 
-create table mailserver.alias
+create table if not exists mailserver.alias
 (
     id    int auto_increment primary key,
     alias tinytext null,
@@ -8,7 +9,7 @@ create table mailserver.alias
 )
     engine = INNODB;
 
-create table mailserver.user
+create table if not exists mailserver.user
 (
     id       int auto_increment primary key,
     name     tinytext null,
@@ -19,8 +20,11 @@ create table mailserver.user
     engine = INNODB;
 
 CREATE USER IF NOT EXISTS 'postdove'@'%';
+CREATE USER IF NOT EXISTS 'nextcloud'@'%';
 
 grant select on table mailserver.user to 'postdove'@'%';
 grant select on table mailserver.alias to 'postdove'@'%';
+
+grant all privileges on nextcloud.* to 'nextcloud'@'%';
 
 
