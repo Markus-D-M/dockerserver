@@ -12,7 +12,8 @@ rsyslogd
 echo -e "Updating spamassassin rules" | logger
 sa-update --nogpg -v --updatedir=/var/lib/spamassassin/rules > /dev/null && echo "Rules updated" | logger || echo "No update required" | logger
 
-# initial clamav databases
+# initial clamav databases update
+chown clamav /var/lib/clamav
 echo -e "Updating ClamAV databases" | logger
 freshclam > /dev/null 2>&1 || echo "Rules updated" | logger && echo "Rules not updated" | logger
 

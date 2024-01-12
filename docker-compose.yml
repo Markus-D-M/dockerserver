@@ -11,6 +11,7 @@ services:
     restart: always
     volumes:
       - ${ENVIRONMENT_ROOT:?error}/amavis/quarantine/:/var/amavis/quarantine/
+      - ${ENVIRONMENT_ROOT:?error}/amavis/clamav/:/var/lib/clamav/
     environment:
       MYDOMAIN: ${MYDOMAIN:?error}
       MAILSERVER_FQDN: ${MAILSERVER_FQDN:?error}

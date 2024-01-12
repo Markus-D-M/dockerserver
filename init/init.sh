@@ -9,14 +9,14 @@ else
   echo "[ ] creating new mysql root password"
 fi
 
-if [ ! -f /root_env/mysql/secrets/mysql_postdove ]; then
+if [ ! -f /root_env/mysql/secrets/mysql_postdove_password ]; then
   /bin/dd bs=32 count=1 if=/dev/urandom 2> /dev/null | /bin/base64 > /root_env/mysql/secrets/mysql_postdove_password
   echo "[X] creating new mysql postdove password"
 else
   echo "[ ] creating new mysql postdove password"
 fi
 
-if [ ! -f /root_env/mysql/secrets/mysql_nextcloud ]; then
+if [ ! -f /root_env/mysql/secrets/mysql_nextcloud_password ]; then
   /bin/dd bs=32 count=1 if=/dev/urandom 2> /dev/null | /bin/base64 > /root_env/mysql/secrets/mysql_nextcloud_password
   echo "[X] creating new mysql nextcloud password"
 else
@@ -25,7 +25,7 @@ fi
 
 
 # amavis
-/bin/mkdir -p /root_env/amavis/quarantine
+/bin/mkdir -p /root_env/amavis/quarantine /root_env/amavis/clamav
 
 # nextcloud
 /bin/mkdir -p /root_env/nextcloud/data
