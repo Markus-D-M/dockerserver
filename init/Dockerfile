@@ -1,4 +1,4 @@
-FROM alpine:3.18
+FROM alpine:3.19
 
 COPY init.sh /app/init.sh
 RUN chmod +x /app/init.sh
